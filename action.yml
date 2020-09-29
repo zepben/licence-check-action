@@ -9,7 +9,7 @@ runs:
     - run: |
         curl -o ~/lc/licence-checker -L $LC_URL
         chmod +x ~/lc/licence-checker
-        find -regextype posix-egrep -regex "(COPYING|.*\.(py|java|kt|cs|proto|js|ts))$" | xargs -n1 ~/lc/licence-checker
+        find -regextype posix-egrep -regex "(COPYING|LICENSE|.*\.(py|java|kt|cs|proto|js|ts))$" | xargs -n1 ~/lc/licence-checker
       shell: bash
       env:
         LC_URL: ${{ inputs.LC_URL }}
