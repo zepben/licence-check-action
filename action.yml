@@ -1,4 +1,4 @@
-name: 'Licence check'
+name: 'Licence checker'
 description: 'Checks for open source licence.'
 inputs:
   LC_URL:
@@ -8,7 +8,6 @@ runs:
   steps: 
     - run: |
         curl -o ~/lc/licence-checker -L $LC_URL
-        echo "TEST"
         chmod +x ~/lc/licence-checker
         find -regextype posix-egrep -regex "(COPYING|.*\.(py|java|kt|cs|proto|js|ts))$" | xargs -n1 ~/lc/licence-checker
       shell: bash
