@@ -6,6 +6,16 @@ inputs:
 runs:
   using: "composite"
   steps: 
+    - name: create lc directory
+      run: mkdir ~/lc
+      shell: bash
+
+    - name: Cache licence-check
+      uses: actions/cache@v2
+      with:
+        path: ~/lc
+        key: lc
+        
     - run: |
         curl -o ~/lc/licence-checker -L $LC_URL
         chmod +x ~/lc/licence-checker
