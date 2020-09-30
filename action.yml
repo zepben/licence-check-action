@@ -2,7 +2,12 @@ name: 'Licence checker'
 description: 'Checks for open source licence.'
 inputs:
   LC_URL:
+    description: "URL used to download licence-checker binary"
     required: true
+  PATH:
+    description: "Path to search for files to check."
+    required: false
+    default: "."
 runs:
   using: "composite"
   steps: 
@@ -10,7 +15,8 @@ runs:
         mkdir -p /lc
         curl -o /lc/licence-checker -L $LC_URL
         chmod +x /lc/licence-checker
-        find . -regex "\(COPYING\|LICENSE\|.*\.\(py\|java\|kt\|cs\|proto\|js\|ts\)\)$" | xargs -n1 /lc/licence-checker
+        find $SEARCHPATH -regex "\(COPYING\|LICENSE\|.*\.\(py\|java\|kt\|cs\|proto\|js\|ts\)\)$" | xargs -n1 /lc/licence-checker
       shell: bash
       env:
         LC_URL: ${{ inputs.LC_URL }}
+        SEARCHPATH: ${{ inputs.PATH  }}
