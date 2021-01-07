@@ -3,7 +3,8 @@ description: 'Checks for open source licence.'
 inputs:
   LC_URL:
     description: "URL used to download licence-checker binary"
-    required: true
+    required: false
+    default: "https://github.com/zepben/licence-checker/releases/latest/download/licence-checker"
   PATH:
     description: "Path to search for files to check."
     required: false
