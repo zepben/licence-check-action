@@ -19,9 +19,9 @@ runs:
         fi
         chmod +x /lc/licence-checker
         if [ "$(gh repo view --json isPrivate | jq .isPrivate)" == "true" ]; then
-          licence_type = "private"
+          licence_type="private"
         else
-          licence_type = "public"
+          licence_type="public"
         fi
         find $SEARCHPATH -regex "\(COPYING\|LICENSE\|.*\.\(py\|java\|kt\|cs\|proto\|js\|ts\)\)$" | xargs -I {} /lc/licence-checker {} "${licence_type}"
       shell: bash
