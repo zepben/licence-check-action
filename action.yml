@@ -25,7 +25,7 @@ runs:
           echo "Repo is public"
           licence_type="public"
         fi
-        echo "Will test ${licence_type} licence"
+        echo "Will check ${licence_type} licence"
         find $SEARCHPATH -regex "\(COPYING\|LICENSE\|.*\.\(py\|java\|kt\|cs\|proto\|js\|ts\)\)$" | xargs -I {} /lc/licence-checker {} "${licence_type}"
       shell: bash
       env:
