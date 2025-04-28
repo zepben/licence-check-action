@@ -9,10 +9,6 @@ inputs:
     description: "Path to search for files to check."
     required: false
     default: "."
-  PRIVATE:
-    description: "Whether to check for private or public licences. True for private."
-    required: false
-    default: true
 runs:
   using: "composite"
   steps: 
@@ -22,13 +18,16 @@ runs:
           curl -o /lc/licence-checker -L $LC_URL
         fi
         chmod +x /lc/licence-checker
-
-        priv=${{ inputs.private }}
-        if [[ $priv == 'true' ]]; then type=private; else type=public; fi
-        # -I {} specifies name of argument, and puts it first, as type must be last
-        find $SEARCHPATH -regex "\(COPYING\|LICENSE\|.*\.\(py\|java\|kt\|cs\|proto\|js\|ts\)\)$" | xargs -n1 -I {} /lc/licence-checker {} $type
+        if [ "$(gh repo view --json isPrivate | jq .isPrivate)" == "true" ]; then
+          echo "Repo is private"
+          licence_type="private"
+        else
+          echo "Repo is public"
+          licence_type="public"
+        fi
+        echo "Will check ${licence_type} licence"
+        find $SEARCHPATH -regex "\(COPYING\|LICENSE\|.*\.\(py\|java\|kt\|cs\|proto\|js\|ts\)\)$" | xargs -I {} /lc/licence-checker {} "${licence_type}"
       shell: bash
       env:
         LC_URL: ${{ inputs.LC_URL }}
         SEARCHPATH: ${{ inputs.PATH  }}
-        TYPE: ${{ inputs.TYPE }}
