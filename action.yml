@@ -31,3 +31,4 @@ runs:
       env:
         LC_URL: ${{ inputs.LC_URL }}
         SEARCHPATH: ${{ inputs.PATH  }}
+        GH_TOKEN: ${{ env.GITHUB_TOKEN }}
