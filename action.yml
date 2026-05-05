@@ -4,7 +4,7 @@ inputs:
   LC_URL:
     description: "URL used to download licence-checker binary"
     required: false
-    default: "https://github.com/zepben/licence-checker/releases/latest/download/licence-checker"
+    default: "https://github.com/zepben/licence-checker/releases/download/v0.4/licence-checker"
   PATH:
     description: "Path to search for files to check."
     required: false
@@ -26,7 +26,7 @@ runs:
           licence_type="public"
         fi
         echo "Will check ${licence_type} licence"
-        /lc/licence-checker ${{ inputs.PATH }} "${licence_type}"
+        find $SEARCHPATH -regex "\(COPYING\|LICENSE\|.*\.\(py\|java\|kt\|cs\|proto\|js\|ts\)\)$" | xargs -I {} /lc/licence-checker {} "${licence_type}"
       shell: bash
       env:
         LC_URL: ${{ inputs.LC_URL }}
