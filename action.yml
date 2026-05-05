@@ -26,9 +26,8 @@ runs:
           licence_type="public"
         fi
         echo "Will check ${licence_type} licence"
-        find $SEARCHPATH -regex "\(COPYING\|LICENSE\|.*\.\(py\|java\|kt\|cs\|proto\|js\|ts\)\)$" | xargs -I {} /lc/licence-checker {} "${licence_type}"
+        /lc/licence-checker ${{ inputs.PATH }} "${licence_type}"
       shell: bash
       env:
         LC_URL: ${{ inputs.LC_URL }}
-        SEARCHPATH: ${{ inputs.PATH  }}
         GH_TOKEN: ${{ env.GITHUB_TOKEN }}
